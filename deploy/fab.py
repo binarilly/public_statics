@@ -1,13 +1,22 @@
 # coding=utf-8
 """
-发布静态公共资源
+Project "publish statics" deployment toolkit.
 """
-import os
+from fabric.operations import local
+from deployment import DeployService
 
 __author__ = 'user'
 
 
-class DeploymentConfig(object):
-    remote_root_path = '~/deployment/www/html'
-    remote_deployment_path = os.path.join(remote_root_path, 'deployments')
-    remote_project_name = 'statics'
+def publish(publish_git_tag):
+    """
+    Publish to code to remote server.
+    :return: result
+    """
+    service = DeployService(None)
+    # 清空OUTPUT
+    service.clean()
+    # 初始化
+    service.init()
+    # 打包
+    service.build_package()
